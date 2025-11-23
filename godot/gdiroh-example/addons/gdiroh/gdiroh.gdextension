@@ -1,0 +1,15 @@
+[configuration]
+entry_symbol = "gdext_rust_init"
+compatibility_minimum = 4.1
+reloadable = true
+
+[libraries]
+linux.debug.x86_64 =     "./libgdiroh.so"
+linux.release.x86_64 =   "./libgdiroh.so"
+windows.debug.x86_64 =   "./gdiroh.dll"
+windows.release.x86_64 = "./gdiroh.dll"
+macos.debug =            "./libgdiroh.dylib"
+macos.release =          "./libgdiroh.dylib"
+macos.debug.arm64 =      "./libgdiroh.dylib"
+macos.release.arm64 =    "./libgdiroh.dylib"
+
