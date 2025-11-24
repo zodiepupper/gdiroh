@@ -2,4 +2,10 @@
 godot/gdiroh-example/.godot
 /godot/gdiroh-example/android/
 
+# ignore the rust build artifacts
 gdiroh/target/
+
+# ignore built binaries in the godot example
+godot/gdiroh-example/addons/gdiroh/*.so
+godot/gdiroh-example/addons/gdiroh/*.dylib
+godot/gdiroh-example/addons/gdiroh/*.dll
