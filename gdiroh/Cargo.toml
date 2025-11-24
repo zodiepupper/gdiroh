@@ -4,7 +4,12 @@ version = "0.1.0"
 edition = "2024"
 
 [lib]
-crate-type = ["cdylib"] # this tells rust to compile the crate as a dynamic C library
+# this tells rust to compile the crate as a dynamic C library
+crate-type = ["cdylib"]
 
 [dependencies]
 godot = "0.4.2"
+
+[workspace]
+resolver = "3"
+members = ["xtask"]
