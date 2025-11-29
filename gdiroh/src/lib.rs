@@ -4,6 +4,9 @@ use godot::prelude::*;
 
 use crate::runtime::IrohRuntime;
 
+mod iroh_endpoint;
+mod iroh_gossip;
+mod iroh_router;
 mod runtime;
 
 struct GDIrohExtension;

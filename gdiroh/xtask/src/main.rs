@@ -25,7 +25,11 @@ struct Arguments {
     #[arg(short, long = "release", default_value = "false")]
     /// Builds gdiroh in the release profile
     release_build: bool,
-    #[arg(short, long = "target", default_value = "../godot/gdiroh-example/addons/gdiroh")]
+    #[arg(
+        short,
+        long = "target",
+        default_value = "../godot/gdiroh-example/addons/gdiroh"
+    )]
     /// The target folder to move the compiled library to
     target_library_folder: PathBuf,
 }
@@ -61,7 +65,11 @@ fn get_library_source(args: &Arguments) -> Result<(PathBuf, String)> {
     };
 
     // use env::consts to handle different OSes using different lib names
-    let library_name = format!("{}gdiroh{}", env::consts::DLL_PREFIX, env::consts::DLL_SUFFIX);
+    let library_name = format!(
+        "{}gdiroh{}",
+        env::consts::DLL_PREFIX,
+        env::consts::DLL_SUFFIX
+    );
 
     Ok((
         gdiroh_root.join(format!("target/{}/{}", target_dir, library_name)),

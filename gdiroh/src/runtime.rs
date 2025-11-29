@@ -50,7 +50,12 @@ pub struct IrohRuntime {
 #[godot_api]
 impl IObject for IrohRuntime {
     fn init(base: Base<Object>) -> Self {
-        let runtime = Some(runtime::Builder::new_multi_thread().enable_all().build().unwrap());
+        let runtime = Some(
+            runtime::Builder::new_multi_thread()
+                .enable_all()
+                .build()
+                .unwrap(),
+        );
 
         Self { base, runtime }
     }
@@ -95,7 +100,9 @@ impl IrohRuntime {
     pub fn deinit_singleton(level: &InitLevel) {
         if level == &InitLevel::Scene {
             let mut engine = Engine::singleton();
-            let singleton = engine.get_singleton("IrohRuntime").expect("Iroh singleton not found");
+            let singleton = engine
+                .get_singleton("IrohRuntime")
+                .expect("Iroh singleton not found");
             engine.unregister_singleton("IrohRuntime");
             singleton.free();
         }
