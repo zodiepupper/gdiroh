@@ -24,8 +24,8 @@ impl IObject for IrohRouter {
 #[godot_api]
 impl IrohRouter {
     #[func]
-    // TODO: Add generic ALPN and handler arguments so this isn't directly bound to iroh-gossip
-    fn bind(&mut self, endpoint: Gd<IrohEndpoint>, gossip: Gd<IrohGossip>) {
+    // TODO: Add a generic handler argument so this isn't directly bound to iroh-gossip
+    fn bind(&mut self, endpoint: Gd<IrohEndpoint>, gossip: Gd<IrohGossip>, alpn: GString) {
         if self.router.is_some() {
             godot_warn!("Called `bind` on a non empty IrohRouter, overwriting...");
         }
@@ -46,9 +46,12 @@ impl IrohRouter {
             return;
         };
 
+        let alpn_string = alpn.to_string();
+        let alpn_bytes = alpn_string.as_bytes();
+
         let router = IrohRuntime::block_on(async move {
             Router::builder(real_endpoint)
-                .accept(iroh_gossip::ALPN, real_gossip)
+                .accept(alpn_bytes, real_gossip)
                 .spawn()
         });
 

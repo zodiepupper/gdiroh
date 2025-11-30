@@ -67,8 +67,6 @@ impl IrohGossip {
             );
         }
 
-        godot_print!("{:?}", keys);
-
         let Some(ref real_gossip) = self.gossip else {
             godot_error!(
                 "Attempted to call subscribe on a blank gossip. You must first spawn the gossip!"
@@ -89,8 +87,6 @@ impl IrohGossip {
 
         self.sender = Some(sender);
         self.receiver = Some(receiver);
-
-        godot_print!("YAY");
     }
 
     #[func]
@@ -100,8 +96,13 @@ impl IrohGossip {
             return;
         };
 
-        IrohRuntime::block_on(async move { receiver.joined().await.expect("NAUR") });
+        IrohRuntime::block_on(async move {
+            receiver
+                .joined()
+                .await
+                .expect("Waiting for connection failed")
+        });
 
-        godot_print!("PEER CONNECTED YAAYYYY");
+        godot_print!("PEER CONNECTED!");
     }
 }
