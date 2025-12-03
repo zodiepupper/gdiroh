@@ -21,8 +21,6 @@ impl IrohEndpoint {
         endpoint_ref: Arc<Mutex<Option<Endpoint>>>,
         alpn: String,
     ) -> Result<Endpoint> {
-        godot_print!("test1");
-
         if endpoint_ref.lock().unwrap().is_some() {
             godot_warn!("Endpoint is not empty, overwriting...");
         }

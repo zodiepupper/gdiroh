@@ -16,7 +16,7 @@ where
                 &[signal_name.to_variant(), result.to_variant()],
             );
         } else {
-            godot_warn!("IrohEndpoint freed before '{signal_name}' signal could be emitted");
+            godot_warn!("Object freed before '{signal_name}' signal could be emitted");
         }
     }
 }
