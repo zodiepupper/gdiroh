@@ -1,3 +1,6 @@
+# vscode metadata
+.vscode
+
 # Godot 4+ specific ignores
 godot/gdiroh-example/.godot
 /godot/gdiroh-example/android/

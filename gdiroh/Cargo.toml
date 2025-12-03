@@ -9,9 +9,8 @@ crate-type = ["cdylib"]
 
 [dependencies]
 anyhow = "1.0.100"
-godot = "0.4.3"
+godot = { version = "0.4.3", features = ["experimental-threads"] }
 iroh = { version = "0.95.1", default-features = false }
-iroh-gossip = "0.95.0"
 tokio = { version = "1.48.0", features = ["rt-multi-thread"] }
 
 
