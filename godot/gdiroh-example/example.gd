@@ -16,7 +16,7 @@ func _init() -> void:
 
 func _on_endpoint_bound(result: bool):
 	if result:
-		var key = endpoint.addr()
+		var key = endpoint.address()
 		print("My addr: `", key, "`")
 	else:
 		print("Endpoint did not bind!")
