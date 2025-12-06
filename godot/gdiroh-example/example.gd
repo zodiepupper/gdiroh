@@ -1,23 +1,25 @@
 extends Control
 
-@onready var text_edit = $VBoxContainer/TextEdit
+const EXAMPLE_ALPN = "/gdiroh/example/0"
 
-var alpn = "gdiroh-example"
-var endpoint: IrohEndpoint
+@onready var _address_text_edit = $VBoxContainer/TextEdit
+
+var _endpoint: IrohEndpoint
 
 func _init() -> void:
-	endpoint = IrohEndpoint.new()
+	_endpoint = IrohEndpoint.new()
 	
-	endpoint.accept_async_result.connect(_on_peer_connected)
-	endpoint.connect_async_result.connect(_on_peer_connected)
-	endpoint.bind_async_result.connect(_on_endpoint_bound)
+	_endpoint.accept_async_result.connect(_on_peer_connected)
+	_endpoint.connect_async_result.connect(_on_peer_connected)
+	_endpoint.bind_async_result.connect(_on_endpoint_bound)
 	
-	endpoint.bind_async(alpn)
+	_endpoint.bind_async([EXAMPLE_ALPN])
 
 func _on_endpoint_bound(result: bool):
 	if result:
-		var key = endpoint.address()
-		print("My addr: `", key, "`")
+		var key = _endpoint.address()
+		print("Endpoint binded!")
+		print("My address: `", key, "`")
 	else:
 		print("Endpoint did not bind!")
 	
@@ -26,8 +28,8 @@ func _on_peer_connected(connection: IrohConnection):
 	print("Peer connected! ", connection)
 
 func _on_serve_pressed() -> void:
-	endpoint.accept_async()
+	_endpoint.accept_async()
 
 func _on_connect_pressed() -> void:
-	var key = text_edit.text
-	endpoint.connect_async(key, alpn)
+	var key = _address_text_edit.text.strip_edges()
+	_endpoint.connect_async(key, EXAMPLE_ALPN)

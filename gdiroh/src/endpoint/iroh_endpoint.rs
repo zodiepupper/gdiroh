@@ -1,3 +1,5 @@
+//! Defines the godot wrapper for [`Endpoint`].
+
 use std::sync::{
     Arc,
     Mutex,
@@ -7,8 +9,8 @@ use godot::prelude::*;
 use iroh::Endpoint;
 
 use crate::{
+    connection::IrohConnection,
     helpers::create_signal_emitter,
-    iroh_connection::IrohConnection,
     runtime::IrohRuntime,
 };
 
@@ -41,16 +43,16 @@ impl IrohEndpoint {
     ///
     /// # Arguments
     ///
-    /// * `alpn` - The ALPN protocol this endpoint will accept on incoming connections.
+    /// * `alpns` - An array of ALPN protocols this endpoint will accept on incoming connections.
     ///
     /// # Returns
     ///
     /// `true` when the endpoint was successfully written, `false` otherwise.
-    fn bind_blocking(&self, alpn: GString) -> bool {
+    fn bind_blocking(&self, alpns: Vec<GString>) -> bool {
         let endpoint_ref = self.endpoint.clone();
-        let alpn = alpn.to_string();
+        let alpn_strings = alpns.iter().map(|alpn| alpn.to_string()).collect();
 
-        let result = IrohRuntime::block_on(Self::bind_logic(endpoint_ref, alpn));
+        let result = IrohRuntime::block_on(Self::bind_logic(endpoint_ref, alpn_strings));
 
         match result {
             Ok(endpoint) => {
@@ -69,20 +71,20 @@ impl IrohEndpoint {
     ///
     /// # Arguments
     ///
-    /// * `alpn` - The ALPN protocol this endpoint will accept on incoming connections.
+    /// * `alpns` - An array of ALPN protocols this endpoint will accept on incoming connections.
     ///
     /// # Returns
     ///
     /// Void. Use `bind_async_result` to await results.
-    fn bind_async(&self, alpn: GString) {
+    fn bind_async(&self, alpns: Vec<GString>) {
         let instance_id = self.base().instance_id();
         let endpoint_ref = self.endpoint.clone();
-        let alpn = alpn.to_string();
+        let alpn_strings = alpns.iter().map(|alpn| alpn.to_string()).collect();
 
         IrohRuntime::spawn(async move {
             let push_result = create_signal_emitter::<Self, bool>(instance_id, "bind_async_result");
 
-            let result = Self::bind_logic(endpoint_ref.clone(), alpn).await;
+            let result = Self::bind_logic(endpoint_ref.clone(), alpn_strings).await;
 
             match result {
                 Ok(endpoint) => {

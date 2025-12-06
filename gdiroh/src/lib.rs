@@ -4,11 +4,11 @@ use godot::prelude::*;
 
 use crate::runtime::IrohRuntime;
 
+mod connection;
+mod endpoint;
 mod helpers;
-mod iroh_connection;
-mod iroh_endpoint;
-mod iroh_endpoint_logic;
 mod runtime;
+mod streams;
 
 struct GDIrohExtension;
 
