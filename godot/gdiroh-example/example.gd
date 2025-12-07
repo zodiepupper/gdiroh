@@ -9,7 +9,7 @@ var _endpoint: IrohEndpoint
 func _init() -> void:
 	_endpoint = IrohEndpoint.new()
 	
-	_endpoint.accept_async_result.connect(_on_peer_connected)
+	_endpoint.accept_async_result.connect(_on_peer_accepted)
 	_endpoint.connect_async_result.connect(_on_peer_connected)
 	_endpoint.bind_async_result.connect(_on_endpoint_bound)
 	
@@ -24,8 +24,16 @@ func _on_endpoint_bound(result: bool):
 		print("Endpoint did not bind!")
 	
 
+func _on_peer_accepted(connection: IrohConnection):
+	print("Peer accepted! ", connection)
+	var stream = connection.accept_bi_blocking()
+	print(stream)
+	
+
 func _on_peer_connected(connection: IrohConnection):
 	print("Peer connected! ", connection)
+	var stream = connection.open_bi_blocking()
+	print(stream)
 
 func _on_serve_pressed() -> void:
 	_endpoint.accept_async()
