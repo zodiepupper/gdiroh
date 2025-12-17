@@ -24,6 +24,22 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 66
 text = "Serve"
 
+[node name="local_address" type="Label" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="copy_local_address" type="Button" parent="VBoxContainer/local_address"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -8.0
+grow_horizontal = 0
+grow_vertical = 2
+text = "copy address"
+
 [node name="Label" type="Label" parent="VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 41
@@ -38,8 +54,6 @@ size_flags_vertical = 3
 layout_mode = 2
 theme_override_font_sizes/font_size = 66
 text = "Connect"
-
-[node name="GDIrohLogger" type="Node" parent="."]
 
 [connection signal="pressed" from="VBoxContainer/Button" to="." method="_on_serve_pressed"]
 [connection signal="pressed" from="VBoxContainer/Button2" to="." method="_on_connect_pressed"]
